@@ -86,7 +86,7 @@ AI Opportunity Radar/
 
 ## Current Sprint
 
-Sprint 1 initializes the repository structure, documentation, environment templates, and a small sample dataset. The current pipeline is intentionally a placeholder and does not implement machine learning, email, dashboard, or automation yet.
+Sprint 2 adds a simple preprocessing pipeline for the sample dataset. It loads the sample opportunities, validates the required columns, cleans and normalizes the main fields, parses deadlines, and saves the processed dataset to `data/processed/opportunities_processed.csv`.
 
 ## How To Run Locally
 
@@ -116,13 +116,19 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Run the placeholder pipeline:
+4. Run the preprocessing pipeline:
 
 ```bash
 python -m src.main
 ```
 
-The pipeline currently loads `data/sample/opportunities_sample.csv` and prints a short summary.
+The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, and saves `data/processed/opportunities_processed.csv`.
+
+5. Run tests:
+
+```bash
+python -m unittest
+```
 
 ## Email Configuration
 
@@ -154,7 +160,7 @@ Report generation is planned for a later sprint. Future reports will include:
 
 ## Limitations
 
-- The current version only contains project scaffolding and a sample CSV.
+- The current version only preprocesses the sample CSV dataset.
 - No machine learning models are implemented yet.
 - No historical comparison is implemented yet.
 - No report generation, email sending, dashboard, or scheduled workflow is implemented yet.

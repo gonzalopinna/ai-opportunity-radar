@@ -1,36 +1,14 @@
-from pathlib import Path
-
-import pandas as pd
+from src.processing.preprocess_dataset import run_preprocessing_pipeline
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SAMPLE_DATA_PATH = PROJECT_ROOT / "data" / "sample" / "opportunities_sample.csv"
+def run_pipeline() -> None:
+    """Run the Sprint 2 preprocessing pipeline."""
+    processed_opportunities, saved_path = run_preprocessing_pipeline()
 
-
-def load_sample_opportunities(path: Path = SAMPLE_DATA_PATH) -> pd.DataFrame:
-    """Load the Sprint 1 sample opportunity dataset."""
-    if not path.exists():
-        raise FileNotFoundError(f"Sample dataset not found: {path}")
-
-    return pd.read_csv(path)
-
-
-def run_placeholder_pipeline() -> None:
-    """Run the initial placeholder pipeline for Sprint 1."""
-    opportunities = load_sample_opportunities()
-
-    print("AI Opportunity Radar - Sprint 1 placeholder pipeline")
-    print(f"Loaded {len(opportunities)} sample opportunities.")
-    print()
-    print("Opportunities by category:")
-
-    category_counts = opportunities["category"].value_counts().sort_index()
-    for category, count in category_counts.items():
-        print(f"- {category}: {count}")
-
-    print()
-    print("Next sprint: implement data loading, cleaning, and normalization.")
+    print("AI Opportunity Radar - Sprint 2 preprocessing pipeline")
+    print(f"Processed {len(processed_opportunities)} opportunities.")
+    print(f"Saved cleaned dataset to: {saved_path}")
 
 
 if __name__ == "__main__":
-    run_placeholder_pipeline()
+    run_pipeline()

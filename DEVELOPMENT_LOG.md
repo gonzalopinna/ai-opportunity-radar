@@ -64,3 +64,76 @@ Expected behavior:
 ```text
 Initialize Sprint 1 project scaffold
 ```
+
+## 2026-06-04 - Sprint 2: Data Loading, Cleaning, and Normalization
+
+### What Was Implemented
+
+- Added a preprocessing pipeline for the sample opportunities dataset.
+- Added validation for required dataset columns.
+- Added text cleaning for title, organization, description, and location.
+- Added category normalization into supported project labels.
+- Added remote, onsite, hybrid, and unknown normalization.
+- Added safe deadline parsing.
+- Added required skills normalization into a consistent semicolon-separated format.
+- Added difficulty normalization when the column exists.
+- Updated `src/main.py` so `python -m src.main` runs the preprocessing pipeline.
+- Added unit tests for normalization and preprocessing behavior.
+- Updated the README with the Sprint 2 run and test commands.
+
+### Why It Was Implemented
+
+Sprint 2 turns the placeholder pipeline into a real data preparation step. Clean and consistent input data is necessary before adding deduplication, historical comparison, scoring, classification, clustering, reports, or dashboard features.
+
+### Related ML or Software Concept
+
+- Data loading
+- Data validation
+- Text cleaning
+- Data preprocessing
+- Feature preparation
+- Reproducible pipeline design
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/processing/clean_text.py`
+- `src/processing/normalize.py`
+- `src/processing/deadline_parser.py`
+- `src/processing/preprocess_dataset.py`
+- `tests/__init__.py`
+- `tests/test_preprocess_dataset.py`
+
+### How To Test It
+
+Run the preprocessing pipeline:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command loads `data/sample/opportunities_sample.csv`.
+- It validates that required columns are present.
+- It cleans and normalizes the dataset.
+- It saves `data/processed/opportunities_processed.csv`.
+- It prints the number of processed opportunities.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add Sprint 2 preprocessing pipeline
+```
