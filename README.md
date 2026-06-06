@@ -86,7 +86,7 @@ AI Opportunity Radar/
 
 ## Current Sprint
 
-Sprint 2 adds a simple preprocessing pipeline for the sample dataset. It loads the sample opportunities, validates the required columns, cleans and normalizes the main fields, parses deadlines, and saves the processed dataset to `data/processed/opportunities_processed.csv`.
+Sprint 3 adds deduplication and historical comparison. The pipeline loads and preprocesses the sample opportunities, removes duplicate records from the current run, compares the current results with `data/processed/opportunities_history.csv`, labels opportunities as `new`, `already_seen`, or `updated`, and saves both the current processed dataset and updated history.
 
 ## How To Run Locally
 
@@ -116,13 +116,16 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Run the preprocessing pipeline:
+4. Run the data pipeline:
 
 ```bash
 python -m src.main
 ```
 
-The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, and saves `data/processed/opportunities_processed.csv`.
+The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, and saves:
+
+- `data/processed/opportunities_processed.csv`
+- `data/processed/opportunities_history.csv`
 
 5. Run tests:
 
@@ -160,15 +163,13 @@ Report generation is planned for a later sprint. Future reports will include:
 
 ## Limitations
 
-- The current version only preprocesses the sample CSV dataset.
+- The current version uses a simple CSV-based history file.
 - No machine learning models are implemented yet.
-- No historical comparison is implemented yet.
+- No relevance scoring is implemented yet.
 - No report generation, email sending, dashboard, or scheduled workflow is implemented yet.
 
 ## Future Work
 
-- Implement data loading, cleaning, and normalization.
-- Add deduplication and historical comparison.
 - Build baseline relevance scoring.
 - Add classification, clustering, and urgency detection.
 - Generate Markdown and HTML reports.

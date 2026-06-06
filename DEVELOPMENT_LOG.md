@@ -137,3 +137,71 @@ Expected behavior:
 ```text
 Add Sprint 2 preprocessing pipeline
 ```
+
+## 2026-06-06 - Sprint 3: Deduplication and Historical Comparison
+
+### What Was Implemented
+
+- Added stable opportunity identity keys based on URL when available, with title and organization as a fallback.
+- Added content hashes for fields that should mark an opportunity as updated.
+- Added current-run deduplication that keeps the first record for each identity key.
+- Added CSV-based historical comparison using `data/processed/opportunities_history.csv`.
+- Added opportunity status labels for the current run: `new`, `already_seen`, and `updated`.
+- Updated `src/main.py` to run preprocessing, deduplication, history comparison, and saving through one command.
+- Updated the README to describe the Sprint 3 pipeline outputs.
+- Added tests for deduplication and historical comparison behavior.
+
+### Why It Was Implemented
+
+Sprint 3 adds memory to the project. The system can now tell whether an opportunity is new, unchanged from a previous run, or changed since it was last seen. This is a necessary foundation before ranking, urgency detection, reporting, and dashboard features.
+
+### Related ML or Software Concept
+
+- Data deduplication
+- Entity identity design
+- Historical comparison
+- Change detection
+- Reproducible data pipelines
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/processing/deduplicate.py`
+- `src/storage/history.py`
+- `tests/test_deduplicate.py`
+- `tests/test_history.py`
+
+### How To Test It
+
+Run the data pipeline:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command preprocesses the sample dataset.
+- It removes duplicate opportunities from the current run.
+- It compares the current opportunities with `data/processed/opportunities_history.csv`.
+- It saves `data/processed/opportunities_processed.csv`.
+- It saves or updates `data/processed/opportunities_history.csv`.
+- It prints the number of processed opportunities, removed duplicates, and status counts.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add Sprint 3 deduplication and history comparison
+```
