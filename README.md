@@ -25,8 +25,8 @@ This project is designed as a practical portfolio project. It shows how machine 
 - Score opportunities against a Computer Science student profile.
 - Generate daily Markdown and HTML reports.
 - Optionally send reports by email.
-- Provide a Streamlit dashboard in a later sprint.
-- Run daily through GitHub Actions in a later sprint.
+- Provide a Streamlit dashboard in a later development stage.
+- Run daily through GitHub Actions in a later development stage.
 
 ## Tech Stack
 
@@ -39,7 +39,7 @@ This project is designed as a practical portfolio project. It shows how machine 
 - CSV, JSON, SQLite, or another lightweight storage option for early versions
 - python-dotenv for environment variables
 - smtplib or another safe email method for optional email reports
-- GitHub Actions for scheduled execution in a later sprint
+- GitHub Actions for scheduled execution in a later development stage
 
 ## ML Concepts Planned
 
@@ -84,9 +84,9 @@ AI Opportunity Radar/
 └── .gitignore
 ```
 
-## Current Sprint
+## Current Capabilities
 
-Sprint 3 adds deduplication and historical comparison. The pipeline loads and preprocesses the sample opportunities, removes duplicate records from the current run, compares the current results with `data/processed/opportunities_history.csv`, labels opportunities as `new`, `already_seen`, or `updated`, and saves both the current processed dataset and updated history.
+The current pipeline includes baseline relevance scoring. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, scores each opportunity against a Computer Science student profile, and saves ranked results with `match_score` and `match_reasons`.
 
 ## How To Run Locally
 
@@ -122,10 +122,12 @@ pip install -r requirements.txt
 python -m src.main
 ```
 
-The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, and saves:
+The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, adds baseline relevance scores, and saves:
 
 - `data/processed/opportunities_processed.csv`
 - `data/processed/opportunities_history.csv`
+
+The processed dataset includes `match_score` from 0 to 100 and `match_reasons` explaining the main scoring signals.
 
 5. Run tests:
 
@@ -135,7 +137,7 @@ python -m unittest
 
 ## Email Configuration
 
-Email is planned for a later sprint and is not implemented yet. When implemented, credentials must be provided through environment variables, never hardcoded in the codebase.
+Email is planned for a later development stage and is not implemented yet. When implemented, credentials must be provided through environment variables, never hardcoded in the codebase.
 
 Copy `.env.example` to `.env` and fill in real values only on your local machine:
 
@@ -151,7 +153,7 @@ If Gmail is used later, use a Gmail App Password instead of the normal account p
 
 ## Example Daily Report
 
-Report generation is planned for a later sprint. Future reports will include:
+Report generation is planned for a later development stage. Future reports will include:
 
 - Total opportunities scanned
 - New opportunities
@@ -164,13 +166,12 @@ Report generation is planned for a later sprint. Future reports will include:
 ## Limitations
 
 - The current version uses a simple CSV-based history file.
+- Relevance scoring is a transparent rule-based baseline, not a trained model.
 - No machine learning models are implemented yet.
-- No relevance scoring is implemented yet.
 - No report generation, email sending, dashboard, or scheduled workflow is implemented yet.
 
 ## Future Work
 
-- Build baseline relevance scoring.
 - Add classification, clustering, and urgency detection.
 - Generate Markdown and HTML reports.
 - Add optional email delivery.

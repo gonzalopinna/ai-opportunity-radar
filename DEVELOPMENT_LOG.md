@@ -205,3 +205,68 @@ Expected behavior:
 ```text
 Add Sprint 3 deduplication and history comparison
 ```
+
+## 2026-06-08 - Baseline Relevance Scoring
+
+### What Was Implemented
+
+- Added a transparent rule-based student profile for a Computer Science student interested in AI, machine learning, Python, software engineering, startups, research, hackathons, international opportunities, and quant as a secondary interest.
+- Added baseline relevance scoring from 0 to 100.
+- Added scoring signals for profile interest match, skill overlap, category preference, difficulty fit, remote or hybrid fit, deadline timing, and explicit AI/ML relevance.
+- Added `match_score` and `match_reasons` columns to the processed dataset.
+- Updated `src/main.py` to run scoring after preprocessing, deduplication, and history comparison.
+- Updated the README to describe the scoring output.
+- Added tests for skill parsing, deadline scoring, opportunity scoring, and score-based sorting.
+
+### Why It Was Implemented
+
+This update turns the pipeline into a simple recommender baseline. The scoring logic is intentionally readable and explainable so it can be discussed clearly before introducing trained models or more advanced recommendation techniques.
+
+### Related ML or Software Concept
+
+- Feature engineering
+- Content-based recommendation
+- Rule-based baseline model
+- Ranking
+- Explainable scoring
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/ml/score_relevance.py`
+- `tests/test_score_relevance.py`
+
+### How To Test It
+
+Run the data pipeline:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command preprocesses the sample dataset.
+- It removes duplicate opportunities from the current run.
+- It compares opportunities with history.
+- It adds `match_score` and `match_reasons`.
+- It saves `data/processed/opportunities_processed.csv`.
+- It prints the top match and its score.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add baseline relevance scoring
+```
