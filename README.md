@@ -86,7 +86,7 @@ AI Opportunity Radar/
 
 ## Current Capabilities
 
-The current pipeline includes baseline relevance scoring. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, scores each opportunity against a Computer Science student profile, and saves ranked results with `match_score` and `match_reasons`.
+The current pipeline includes baseline category classification and relevance scoring. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, scores each opportunity against a Computer Science student profile, and saves ranked results with `predicted_category`, `category_confidence`, `match_score`, and `match_reasons`.
 
 ## How To Run Locally
 
@@ -122,12 +122,12 @@ pip install -r requirements.txt
 python -m src.main
 ```
 
-The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, adds baseline relevance scores, and saves:
+The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, adds baseline category predictions and relevance scores, and saves:
 
 - `data/processed/opportunities_processed.csv`
 - `data/processed/opportunities_history.csv`
 
-The processed dataset includes `match_score` from 0 to 100 and `match_reasons` explaining the main scoring signals.
+The processed dataset includes `predicted_category`, `category_confidence`, `category_reason`, `match_score` from 0 to 100, and `match_reasons` explaining the main scoring signals.
 
 5. Run tests:
 
@@ -166,13 +166,14 @@ Report generation is planned for a later development stage. Future reports will 
 ## Limitations
 
 - The current version uses a simple CSV-based history file.
+- Category classification is a transparent keyword baseline because the sample dataset is still small.
 - Relevance scoring is a transparent rule-based baseline, not a trained model.
 - No machine learning models are implemented yet.
 - No report generation, email sending, dashboard, or scheduled workflow is implemented yet.
 
 ## Future Work
 
-- Add classification, clustering, and urgency detection.
+- Add model evaluation, clustering, and urgency detection.
 - Generate Markdown and HTML reports.
 - Add optional email delivery.
 - Build a Streamlit dashboard.

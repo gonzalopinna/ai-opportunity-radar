@@ -2,7 +2,7 @@
 
 This file tracks meaningful development steps for AI Opportunity Radar. Each entry is written so the project can be reviewed later and explained clearly in interviews.
 
-## 2026-06-03 - Sprint 1: Project Initialization
+## 2026-06-03 - Project Initialization
 
 ### What Was Implemented
 
@@ -17,7 +17,7 @@ This file tracks meaningful development steps for AI Opportunity Radar. Each ent
 
 ### Why It Was Implemented
 
-Sprint 1 establishes a clean, readable foundation for the project. The goal is to make the repository understandable before adding data processing, machine learning, reporting, email, dashboard, or automation features.
+This update establishes a clean, readable foundation for the project. The goal is to make the repository understandable before adding data processing, machine learning, reporting, email, dashboard, or automation features.
 
 ### Related ML or Software Concept
 
@@ -62,10 +62,10 @@ Expected behavior:
 ### Suggested Commit Message
 
 ```text
-Initialize Sprint 1 project scaffold
+Initialize project scaffold
 ```
 
-## 2026-06-04 - Sprint 2: Data Loading, Cleaning, and Normalization
+## 2026-06-04 - Data Loading, Cleaning, and Normalization
 
 ### What Was Implemented
 
@@ -79,11 +79,11 @@ Initialize Sprint 1 project scaffold
 - Added difficulty normalization when the column exists.
 - Updated `src/main.py` so `python -m src.main` runs the preprocessing pipeline.
 - Added unit tests for normalization and preprocessing behavior.
-- Updated the README with the Sprint 2 run and test commands.
+- Updated the README with the preprocessing run and test commands.
 
 ### Why It Was Implemented
 
-Sprint 2 turns the placeholder pipeline into a real data preparation step. Clean and consistent input data is necessary before adding deduplication, historical comparison, scoring, classification, clustering, reports, or dashboard features.
+This update turns the placeholder pipeline into a real data preparation step. Clean and consistent input data is necessary before adding deduplication, historical comparison, scoring, classification, clustering, reports, or dashboard features.
 
 ### Related ML or Software Concept
 
@@ -135,10 +135,10 @@ Expected behavior:
 ### Suggested Commit Message
 
 ```text
-Add Sprint 2 preprocessing pipeline
+Add preprocessing pipeline
 ```
 
-## 2026-06-06 - Sprint 3: Deduplication and Historical Comparison
+## 2026-06-06 - Deduplication and Historical Comparison
 
 ### What Was Implemented
 
@@ -148,12 +148,12 @@ Add Sprint 2 preprocessing pipeline
 - Added CSV-based historical comparison using `data/processed/opportunities_history.csv`.
 - Added opportunity status labels for the current run: `new`, `already_seen`, and `updated`.
 - Updated `src/main.py` to run preprocessing, deduplication, history comparison, and saving through one command.
-- Updated the README to describe the Sprint 3 pipeline outputs.
+- Updated the README to describe the deduplication and history outputs.
 - Added tests for deduplication and historical comparison behavior.
 
 ### Why It Was Implemented
 
-Sprint 3 adds memory to the project. The system can now tell whether an opportunity is new, unchanged from a previous run, or changed since it was last seen. This is a necessary foundation before ranking, urgency detection, reporting, and dashboard features.
+This update adds memory to the project. The system can now tell whether an opportunity is new, unchanged from a previous run, or changed since it was last seen. This is a necessary foundation before ranking, urgency detection, reporting, and dashboard features.
 
 ### Related ML or Software Concept
 
@@ -203,7 +203,7 @@ Expected behavior:
 ### Suggested Commit Message
 
 ```text
-Add Sprint 3 deduplication and history comparison
+Add deduplication and history comparison
 ```
 
 ## 2026-06-08 - Baseline Relevance Scoring
@@ -269,4 +269,70 @@ Expected behavior:
 
 ```text
 Add baseline relevance scoring
+```
+
+## 2026-06-09 - Baseline Opportunity Classification
+
+### What Was Implemented
+
+- Added a transparent keyword-based opportunity classifier.
+- Added supported categories for internship, scholarship, hackathon, research, startup, graduate program, online course, competition, and other.
+- Added `predicted_category`, `category_confidence`, and `category_reason` columns to the processed dataset.
+- Updated `src/main.py` to classify opportunities before relevance scoring.
+- Updated the README to describe classification outputs.
+- Removed remaining project-file references to internal development phase labels.
+- Added tests for category prediction and classification output columns.
+
+### Why It Was Implemented
+
+The dataset is still too small for a trained classifier to be meaningful. A readable keyword baseline gives the project a working classification layer now and creates a clear comparison point for future model-based classification and evaluation.
+
+### Related ML or Software Concept
+
+- Text feature extraction
+- Rule-based classification baseline
+- Label prediction
+- Explainable classification
+- Data pipeline composition
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/ml/classify_opportunities.py`
+- `tests/test_classify_opportunities.py`
+
+### How To Test It
+
+Run the data pipeline:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command preprocesses the sample dataset.
+- It removes duplicate opportunities from the current run.
+- It compares opportunities with history.
+- It adds `predicted_category`, `category_confidence`, and `category_reason`.
+- It adds `match_score` and `match_reasons`.
+- It saves `data/processed/opportunities_processed.csv`.
+- It prints predicted category counts.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add baseline opportunity classification
 ```
