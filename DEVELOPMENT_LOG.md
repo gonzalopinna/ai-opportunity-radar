@@ -336,3 +336,68 @@ Expected behavior:
 ```text
 Add baseline opportunity classification
 ```
+
+## 2026-06-10 - Classification Evaluation
+
+### What Was Implemented
+
+- Added classification evaluation for the baseline opportunity classifier.
+- Added accuracy, macro precision, macro recall, macro F1, weighted precision, weighted recall, and weighted F1 metrics.
+- Added per-category precision, recall, F1, and support.
+- Added JSON export for evaluation results at `data/processed/classification_evaluation.json`.
+- Updated `src/main.py` to run evaluation after classification and before relevance scoring.
+- Updated the README to document the evaluation output.
+- Added tests for metric calculation, required columns, and JSON export.
+
+### Why It Was Implemented
+
+Evaluation makes the classifier measurable instead of just functional. Because the dataset is still small, this update evaluates the transparent baseline against the labeled sample data rather than using a train/test split that would be too noisy to interpret.
+
+### Related ML or Software Concept
+
+- Model evaluation
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- Per-class metrics
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/ml/evaluate_classification.py`
+- `tests/test_evaluate_classification.py`
+
+### How To Test It
+
+Run the data pipeline:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command preprocesses the sample dataset.
+- It classifies opportunities with the baseline classifier.
+- It evaluates predictions against the labeled sample categories.
+- It saves `data/processed/classification_evaluation.json`.
+- It prints accuracy and macro F1.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add classification evaluation metrics
+```
