@@ -1,4 +1,5 @@
 from src.ml.classify_opportunities import apply_category_classification
+from src.ml.cluster_opportunities import apply_opportunity_clustering
 from src.ml.evaluate_classification import run_classification_evaluation
 from src.ml.score_relevance import apply_relevance_scores
 from src.processing.deduplicate import deduplicate_opportunities
@@ -11,7 +12,7 @@ from src.storage.history import run_history_comparison
 
 
 def run_pipeline() -> None:
-    """Run the data pipeline with category classification and relevance scoring."""
+    """Run the data pipeline with classification, clustering, and scoring."""
     processed_opportunities, _ = run_preprocessing_pipeline()
     deduplicated_opportunities = deduplicate_opportunities(processed_opportunities)
     compared_opportunities, history_path = run_history_comparison(
@@ -21,12 +22,13 @@ def run_pipeline() -> None:
     evaluation_results, evaluation_path = run_classification_evaluation(
         classified_opportunities
     )
-    scored_opportunities = apply_relevance_scores(classified_opportunities)
+    clustered_opportunities = apply_opportunity_clustering(classified_opportunities)
+    scored_opportunities = apply_relevance_scores(clustered_opportunities)
     saved_path = save_processed_opportunities(scored_opportunities, DEFAULT_OUTPUT_PATH)
 
     removed_duplicates = len(processed_opportunities) - len(deduplicated_opportunities)
 
-    print("AI Opportunity Radar - classification and relevance pipeline")
+    print("AI Opportunity Radar - classification, clustering, and relevance pipeline")
     print(f"Processed {len(scored_opportunities)} opportunities.")
     print(f"Removed {removed_duplicates} duplicate opportunities.")
     print("Status counts:")
@@ -38,6 +40,11 @@ def run_pipeline() -> None:
 
     for category, count in scored_opportunities["predicted_category"].value_counts().items():
         print(f"- {category}: {count}")
+
+    print("Cluster counts:")
+
+    for cluster_label, count in scored_opportunities["cluster_label"].value_counts().items():
+        print(f"- {cluster_label}: {count}")
 
     print(
         "Classification evaluation: "

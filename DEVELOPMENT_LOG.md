@@ -401,3 +401,69 @@ Expected behavior:
 ```text
 Add classification evaluation metrics
 ```
+
+## 2026-06-12 - Opportunity Clustering
+
+### What Was Implemented
+
+- Added a simple K-Means clustering module for grouping similar opportunities.
+- Added lightweight text tokenization and bag-of-words vectorization.
+- Added deterministic centroid initialization for reproducible clustering.
+- Added readable cluster descriptions based on the strongest terms in each cluster.
+- Added `cluster_id`, `cluster_label`, and `cluster_keywords` columns to the processed dataset.
+- Updated `src/main.py` to run clustering before relevance scoring.
+- Updated the README to describe the clustering output.
+- Added tests for tokenization, vectorization, K-Means labels, and output columns.
+
+### Why It Was Implemented
+
+Clustering helps users inspect groups of similar opportunities instead of only reading a ranked list. The implementation is intentionally small and deterministic so the concept is easy to understand before introducing more advanced vectorization or external ML utilities.
+
+### Related ML or Software Concept
+
+- K-Means clustering
+- Bag-of-words features
+- Unsupervised learning
+- Similarity grouping
+- Feature extraction from text
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/ml/cluster_opportunities.py`
+- `tests/test_cluster_opportunities.py`
+
+### How To Test It
+
+Run the data pipeline:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command preprocesses the sample dataset.
+- It classifies and evaluates opportunities.
+- It groups opportunities into clusters.
+- It adds `cluster_id`, `cluster_label`, and `cluster_keywords`.
+- It saves `data/processed/opportunities_processed.csv`.
+- It prints cluster counts.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add opportunity clustering
+```
