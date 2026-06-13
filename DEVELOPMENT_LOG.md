@@ -467,3 +467,69 @@ Expected behavior:
 ```text
 Add opportunity clustering
 ```
+
+## 2026-06-13 - Urgency and Anomaly Detection
+
+### What Was Implemented
+
+- Added rule-based urgency and anomaly detection.
+- Added deadline-based signals for soon and approaching deadlines.
+- Added high-match detection based on relevance score.
+- Added rare-category detection within the current run.
+- Added new or updated high-value organization detection.
+- Added `is_urgent`, `high_match`, `urgency_score`, `priority_level`, `anomaly_flags`, and `urgency_reasons` columns.
+- Updated `src/main.py` to run urgency detection after relevance scoring.
+- Updated the README to describe priority and urgency outputs.
+- Added tests for deadline distance, high-value organizations, urgency flags, high-match flags, and output columns.
+
+### Why It Was Implemented
+
+The system should help a student notice opportunities that deserve immediate attention. This update adds simple, explainable priority signals before building reports, email delivery, or a dashboard.
+
+### Related ML or Software Concept
+
+- Rule-based anomaly detection
+- Urgency detection
+- Feature thresholds
+- Priority scoring
+- Explainable alerts
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/ml/detect_anomalies.py`
+- `tests/test_detect_anomalies.py`
+
+### How To Test It
+
+Run the data pipeline:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command preprocesses the sample dataset.
+- It classifies, evaluates, clusters, and scores opportunities.
+- It adds urgency and anomaly columns.
+- It saves `data/processed/opportunities_processed.csv`.
+- It prints urgent and high-match opportunity counts.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add urgency and anomaly detection
+```
