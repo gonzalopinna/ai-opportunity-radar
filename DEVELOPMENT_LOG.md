@@ -533,3 +533,69 @@ Expected behavior:
 ```text
 Add urgency and anomaly detection
 ```
+
+## 2026-06-14 - Daily Report Generation
+
+### What Was Implemented
+
+- Added Markdown and HTML report generation.
+- Added summary metrics for total, new, updated, urgent, and high-match opportunities.
+- Added a top recommended opportunities table.
+- Added recommendation reasons using match, urgency, and category explanations.
+- Added report saving to `reports/daily/opportunity_report_YYYY-MM-DD.md`.
+- Added report saving to `reports/daily/opportunity_report_YYYY-MM-DD.html`.
+- Updated `src/main.py` to generate reports after the processed dataset is saved.
+- Updated the README to document the report outputs.
+- Added tests for summaries, top opportunity selection, Markdown generation, HTML generation, and report file creation.
+
+### Why It Was Implemented
+
+Reports turn the pipeline output into something a student can review quickly. Markdown is useful for GitHub and local inspection, while HTML prepares the project for future email delivery and dashboard-adjacent presentation.
+
+### Related ML or Software Concept
+
+- Recommendation presentation
+- Ranking output
+- Explainability
+- Automated reporting
+- Product-oriented pipeline output
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/reports/generate_report.py`
+- `tests/test_generate_report.py`
+
+### How To Test It
+
+Run the data pipeline:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command processes and ranks opportunities.
+- It saves `data/processed/opportunities_processed.csv`.
+- It saves `reports/daily/opportunity_report_YYYY-MM-DD.md`.
+- It saves `reports/daily/opportunity_report_YYYY-MM-DD.html`.
+- It prints the report paths.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add daily report generation
+```

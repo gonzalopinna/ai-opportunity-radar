@@ -86,7 +86,7 @@ AI Opportunity Radar/
 
 ## Current Capabilities
 
-The current pipeline includes baseline category classification, classification evaluation, K-Means clustering, relevance scoring, and urgency detection. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, evaluates predictions against the labeled sample data, groups similar opportunities, scores each opportunity against a Computer Science student profile, detects urgent or unusual signals, and saves ranked results with category, cluster, scoring, and priority fields.
+The current pipeline includes baseline category classification, classification evaluation, K-Means clustering, relevance scoring, urgency detection, and daily report generation. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, evaluates predictions against the labeled sample data, groups similar opportunities, scores each opportunity against a Computer Science student profile, detects urgent or unusual signals, and saves ranked results plus Markdown and HTML reports.
 
 ## How To Run Locally
 
@@ -122,11 +122,13 @@ pip install -r requirements.txt
 python -m src.main
 ```
 
-The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, adds baseline category predictions, evaluates those predictions, groups similar opportunities with K-Means, adds relevance scores, detects urgent or unusual opportunities, and saves:
+The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, adds baseline category predictions, evaluates those predictions, groups similar opportunities with K-Means, adds relevance scores, detects urgent or unusual opportunities, generates daily reports, and saves:
 
 - `data/processed/opportunities_processed.csv`
 - `data/processed/opportunities_history.csv`
 - `data/processed/classification_evaluation.json`
+- `reports/daily/opportunity_report_YYYY-MM-DD.md`
+- `reports/daily/opportunity_report_YYYY-MM-DD.html`
 
 The processed dataset includes `predicted_category`, `category_confidence`, `category_reason`, `cluster_id`, `cluster_label`, `cluster_keywords`, `match_score` from 0 to 100, `match_reasons`, `is_urgent`, `high_match`, `urgency_score`, `priority_level`, `anomaly_flags`, and `urgency_reasons`.
 
@@ -154,10 +156,11 @@ If Gmail is used later, use a Gmail App Password instead of the normal account p
 
 ## Example Daily Report
 
-Report generation is planned for a later development stage. Future reports will include:
+Generated daily reports include:
 
 - Total opportunities scanned
 - New opportunities
+- Updated opportunities
 - High-match opportunities
 - Urgent deadlines
 - Top recommended opportunities
@@ -172,12 +175,12 @@ Report generation is planned for a later development stage. Future reports will 
 - Clustering uses a small deterministic K-Means implementation for educational clarity.
 - Relevance scoring is a transparent rule-based baseline, not a trained model.
 - Urgency detection is rule-based and should be tuned with more real opportunity data.
+- Reports are generated from the local processed dataset and are not emailed yet.
 - No machine learning models are implemented yet.
-- No report generation, email sending, dashboard, or scheduled workflow is implemented yet.
+- No email sending, dashboard, or scheduled workflow is implemented yet.
 
 ## Future Work
 
-- Generate Markdown and HTML reports.
 - Add optional email delivery.
 - Build a Streamlit dashboard.
 - Add a scheduled GitHub Actions workflow.

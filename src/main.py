@@ -9,6 +9,7 @@ from src.processing.preprocess_dataset import (
     run_preprocessing_pipeline,
     save_processed_opportunities,
 )
+from src.reports.generate_report import save_daily_reports
 from src.storage.history import run_history_comparison
 
 
@@ -27,6 +28,7 @@ def run_pipeline() -> None:
     scored_opportunities = apply_relevance_scores(clustered_opportunities)
     final_opportunities = apply_urgency_detection(scored_opportunities)
     saved_path = save_processed_opportunities(final_opportunities, DEFAULT_OUTPUT_PATH)
+    markdown_report_path, html_report_path = save_daily_reports(final_opportunities)
 
     removed_duplicates = len(processed_opportunities) - len(deduplicated_opportunities)
 
@@ -67,6 +69,8 @@ def run_pipeline() -> None:
     print(f"Saved current processed dataset to: {saved_path}")
     print(f"Saved updated opportunity history to: {history_path}")
     print(f"Saved classification evaluation to: {evaluation_path}")
+    print(f"Saved Markdown report to: {markdown_report_path}")
+    print(f"Saved HTML report to: {html_report_path}")
 
 
 if __name__ == "__main__":
