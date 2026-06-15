@@ -10,6 +10,7 @@ from src.processing.preprocess_dataset import (
     save_processed_opportunities,
 )
 from src.reports.generate_report import save_daily_reports
+from src.reports.email_sender import send_email_report
 from src.storage.history import run_history_comparison
 
 
@@ -29,6 +30,10 @@ def run_pipeline() -> None:
     final_opportunities = apply_urgency_detection(scored_opportunities)
     saved_path = save_processed_opportunities(final_opportunities, DEFAULT_OUTPUT_PATH)
     markdown_report_path, html_report_path = save_daily_reports(final_opportunities)
+    email_result = send_email_report(
+        html_report_path=html_report_path,
+        markdown_report_path=markdown_report_path,
+    )
 
     removed_duplicates = len(processed_opportunities) - len(deduplicated_opportunities)
 
@@ -71,6 +76,7 @@ def run_pipeline() -> None:
     print(f"Saved classification evaluation to: {evaluation_path}")
     print(f"Saved Markdown report to: {markdown_report_path}")
     print(f"Saved HTML report to: {html_report_path}")
+    print(email_result.message)
 
 
 if __name__ == "__main__":

@@ -86,7 +86,7 @@ AI Opportunity Radar/
 
 ## Current Capabilities
 
-The current pipeline includes baseline category classification, classification evaluation, K-Means clustering, relevance scoring, urgency detection, and daily report generation. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, evaluates predictions against the labeled sample data, groups similar opportunities, scores each opportunity against a Computer Science student profile, detects urgent or unusual signals, and saves ranked results plus Markdown and HTML reports.
+The current pipeline includes baseline category classification, classification evaluation, K-Means clustering, relevance scoring, urgency detection, daily report generation, and optional email delivery. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, evaluates predictions against the labeled sample data, groups similar opportunities, scores each opportunity against a Computer Science student profile, detects urgent or unusual signals, saves ranked results plus Markdown and HTML reports, and can email the HTML report when credentials are configured.
 
 ## How To Run Locally
 
@@ -122,7 +122,7 @@ pip install -r requirements.txt
 python -m src.main
 ```
 
-The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, adds baseline category predictions, evaluates those predictions, groups similar opportunities with K-Means, adds relevance scores, detects urgent or unusual opportunities, generates daily reports, and saves:
+The pipeline loads `data/sample/opportunities_sample.csv`, cleans and normalizes the data, removes current-run duplicates, compares results with the local opportunity history, adds baseline category predictions, evaluates those predictions, groups similar opportunities with K-Means, adds relevance scores, detects urgent or unusual opportunities, generates daily reports, optionally sends the HTML report by email, and saves:
 
 - `data/processed/opportunities_processed.csv`
 - `data/processed/opportunities_history.csv`
@@ -140,7 +140,7 @@ python -m unittest
 
 ## Email Configuration
 
-Email is planned for a later development stage and is not implemented yet. When implemented, credentials must be provided through environment variables, never hardcoded in the codebase.
+Email delivery is optional. If email environment variables are missing, the pipeline skips email sending and still completes successfully. Credentials must be provided through environment variables, never hardcoded in the codebase.
 
 Copy `.env.example` to `.env` and fill in real values only on your local machine:
 
@@ -152,7 +152,7 @@ EMAIL_PASSWORD=
 EMAIL_TO=
 ```
 
-If Gmail is used later, use a Gmail App Password instead of the normal account password.
+For Gmail, use an App Password instead of the normal account password.
 
 ## Example Daily Report
 
@@ -175,12 +175,11 @@ Generated daily reports include:
 - Clustering uses a small deterministic K-Means implementation for educational clarity.
 - Relevance scoring is a transparent rule-based baseline, not a trained model.
 - Urgency detection is rule-based and should be tuned with more real opportunity data.
-- Reports are generated from the local processed dataset and are not emailed yet.
+- Email sending is optional and depends on local environment variables.
 - No machine learning models are implemented yet.
-- No email sending, dashboard, or scheduled workflow is implemented yet.
+- No dashboard or scheduled workflow is implemented yet.
 
 ## Future Work
 
-- Add optional email delivery.
 - Build a Streamlit dashboard.
 - Add a scheduled GitHub Actions workflow.

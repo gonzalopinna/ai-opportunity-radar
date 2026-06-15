@@ -599,3 +599,66 @@ Expected behavior:
 ```text
 Add daily report generation
 ```
+
+## 2026-06-15 - Optional Email Delivery
+
+### What Was Implemented
+
+- Added optional HTML report delivery by email.
+- Added environment-based email configuration using `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASSWORD`, and `EMAIL_TO`.
+- Added safe skip behavior when email configuration is missing.
+- Added HTML email body with Markdown fallback text when available.
+- Added SMTP support with TLS for standard ports and SSL for port 465.
+- Updated `src/main.py` to attempt email delivery after report generation.
+- Updated the README with email setup guidance and Gmail App Password guidance.
+- Added tests for missing configuration, config parsing, email message creation, SMTP sending behavior, and skip behavior.
+
+### Why It Was Implemented
+
+Email delivery makes the generated report actionable without requiring the user to manually open local files. The feature is optional and secure by default, so the pipeline remains usable without credentials and does not expose secrets.
+
+### Related Software Concept
+
+- Environment-based configuration
+- Secret handling
+- Optional integrations
+- SMTP email delivery
+- Safe fallback behavior
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `src/main.py`
+- `src/reports/email_sender.py`
+- `tests/test_email_sender.py`
+
+### How To Test It
+
+Run the data pipeline without email credentials:
+
+```bash
+python -m src.main
+```
+
+Expected behavior:
+
+- The command generates processed data and reports.
+- Email sending is skipped with a clear message.
+- The pipeline exits successfully.
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add optional email delivery
+```
