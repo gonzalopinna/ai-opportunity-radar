@@ -662,3 +662,64 @@ Expected behavior:
 ```text
 Add optional email delivery
 ```
+
+## 2026-06-16 - Streamlit Dashboard
+
+### What Was Implemented
+
+- Added a Streamlit dashboard at `app/streamlit_app.py`.
+- Added filters for category, status, priority, mode, minimum match score, and urgent-only results.
+- Added top-level metrics for total opportunities, urgent opportunities, high-match opportunities, and average score.
+- Added tabs for ranked opportunities, urgent opportunities, clusters, opportunity details, and generated reports.
+- Added detail view with organization, deadline, mode, cluster, match reasons, priority reasons, and application link.
+- Updated the README with the dashboard command.
+
+### Why It Was Implemented
+
+The dashboard makes the project easier to inspect without opening CSV files directly. It turns the pipeline output into an interactive review tool for filtering, ranking, and explaining recommended opportunities.
+
+### Related Software Concept
+
+- Interactive dashboarding
+- Data exploration
+- Filtering and ranking UI
+- Product-oriented presentation
+- Local analytics app
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `app/streamlit_app.py`
+
+### How To Test It
+
+Run the data pipeline first:
+
+```bash
+python -m src.main
+```
+
+Open the dashboard:
+
+```bash
+streamlit run app/streamlit_app.py
+```
+
+Run the tests:
+
+```bash
+python -m unittest
+```
+
+Expected behavior:
+
+- The pipeline creates `data/processed/opportunities_processed.csv`.
+- The dashboard loads the processed CSV and displays filters, metrics, tables, clusters, details, and report links.
+- All tests pass.
+
+### Suggested Commit Message
+
+```text
+Add Streamlit dashboard
+```

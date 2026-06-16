@@ -86,7 +86,7 @@ AI Opportunity Radar/
 
 ## Current Capabilities
 
-The current pipeline includes baseline category classification, classification evaluation, K-Means clustering, relevance scoring, urgency detection, daily report generation, and optional email delivery. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, evaluates predictions against the labeled sample data, groups similar opportunities, scores each opportunity against a Computer Science student profile, detects urgent or unusual signals, saves ranked results plus Markdown and HTML reports, and can email the HTML report when credentials are configured.
+The current pipeline includes baseline category classification, classification evaluation, K-Means clustering, relevance scoring, urgency detection, daily report generation, optional email delivery, and a Streamlit dashboard. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, evaluates predictions against the labeled sample data, groups similar opportunities, scores each opportunity against a Computer Science student profile, detects urgent or unusual signals, saves ranked results plus Markdown and HTML reports, can email the HTML report when credentials are configured, and provides an interactive dashboard for reviewing results.
 
 ## How To Run Locally
 
@@ -138,6 +138,12 @@ The processed dataset includes `predicted_category`, `category_confidence`, `cat
 python -m unittest
 ```
 
+6. Open the dashboard:
+
+```bash
+streamlit run app/streamlit_app.py
+```
+
 ## Email Configuration
 
 Email delivery is optional. If email environment variables are missing, the pipeline skips email sending and still completes successfully. Credentials must be provided through environment variables, never hardcoded in the codebase.
@@ -176,10 +182,10 @@ Generated daily reports include:
 - Relevance scoring is a transparent rule-based baseline, not a trained model.
 - Urgency detection is rule-based and should be tuned with more real opportunity data.
 - Email sending is optional and depends on local environment variables.
+- The dashboard reads the generated processed CSV and does not yet write back changes.
 - No machine learning models are implemented yet.
-- No dashboard or scheduled workflow is implemented yet.
+- No scheduled workflow is implemented yet.
 
 ## Future Work
 
-- Build a Streamlit dashboard.
 - Add a scheduled GitHub Actions workflow.
