@@ -723,3 +723,60 @@ Expected behavior:
 ```text
 Add Streamlit dashboard
 ```
+
+## 2026-06-17 - GitHub Actions Automation
+
+### What Was Implemented
+
+- Added a GitHub Actions workflow at `.github/workflows/daily_radar.yml`.
+- Added manual execution with `workflow_dispatch`.
+- Added daily scheduled execution.
+- Added Python setup and dependency installation.
+- Added automated test execution with `python -m unittest`.
+- Added pipeline execution with `python -m src.main`.
+- Added workflow artifact upload for generated reports and processed data.
+- Added optional email configuration through GitHub repository secrets.
+- Updated the README with automation and secrets guidance.
+
+### Why It Was Implemented
+
+Automation turns the project from a local-only pipeline into a repeatable daily system. The workflow keeps the project testable in CI, generates fresh outputs, and supports optional email delivery without hardcoding credentials.
+
+### Related Software Concept
+
+- Continuous integration
+- Scheduled automation
+- Reproducible pipeline execution
+- GitHub Actions
+- Secret-based configuration
+
+### Files Changed
+
+- `README.md`
+- `DEVELOPMENT_LOG.md`
+- `.github/workflows/daily_radar.yml`
+
+### How To Test It
+
+Run the local checks:
+
+```bash
+python -m unittest
+python -m src.main
+```
+
+After pushing, open the repository Actions tab and run `Daily AI Opportunity Radar` manually.
+
+Expected behavior:
+
+- The workflow installs dependencies.
+- It runs the test suite.
+- It runs the opportunity radar pipeline.
+- It uploads generated reports and processed files as artifacts.
+- Email sending is skipped unless secrets are configured.
+
+### Suggested Commit Message
+
+```text
+Add GitHub Actions automation
+```

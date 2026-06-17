@@ -86,7 +86,7 @@ AI Opportunity Radar/
 
 ## Current Capabilities
 
-The current pipeline includes baseline category classification, classification evaluation, K-Means clustering, relevance scoring, urgency detection, daily report generation, optional email delivery, and a Streamlit dashboard. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, evaluates predictions against the labeled sample data, groups similar opportunities, scores each opportunity against a Computer Science student profile, detects urgent or unusual signals, saves ranked results plus Markdown and HTML reports, can email the HTML report when credentials are configured, and provides an interactive dashboard for reviewing results.
+The current pipeline includes baseline category classification, classification evaluation, K-Means clustering, relevance scoring, urgency detection, daily report generation, optional email delivery, a Streamlit dashboard, and scheduled automation with GitHub Actions. It loads and preprocesses the sample opportunities, removes duplicate records, compares the current results with history, predicts an opportunity type, evaluates predictions against the labeled sample data, groups similar opportunities, scores each opportunity against a Computer Science student profile, detects urgent or unusual signals, saves ranked results plus Markdown and HTML reports, can email the HTML report when credentials are configured, provides an interactive dashboard for reviewing results, and can run automatically on GitHub.
 
 ## How To Run Locally
 
@@ -144,6 +144,20 @@ python -m unittest
 streamlit run app/streamlit_app.py
 ```
 
+## Automation
+
+The GitHub Actions workflow in `.github/workflows/daily_radar.yml` can run the project automatically every day or manually from the Actions tab. It installs dependencies, runs tests, executes the pipeline, and uploads generated reports and processed data as workflow artifacts.
+
+Email delivery remains optional in GitHub Actions. Add these repository secrets only if you want the workflow to send email:
+
+```text
+EMAIL_HOST
+EMAIL_PORT
+EMAIL_USER
+EMAIL_PASSWORD
+EMAIL_TO
+```
+
 ## Email Configuration
 
 Email delivery is optional. If email environment variables are missing, the pipeline skips email sending and still completes successfully. Credentials must be provided through environment variables, never hardcoded in the codebase.
@@ -184,8 +198,8 @@ Generated daily reports include:
 - Email sending is optional and depends on local environment variables.
 - The dashboard reads the generated processed CSV and does not yet write back changes.
 - No machine learning models are implemented yet.
-- No scheduled workflow is implemented yet.
+- The automated workflow currently uses the sample dataset.
 
 ## Future Work
 
-- Add a scheduled GitHub Actions workflow.
+- Add more real opportunity sources.
